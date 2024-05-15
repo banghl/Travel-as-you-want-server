@@ -5,7 +5,6 @@ var cors = require('cors')
 const app = express();
 const port = 8000; // Define your desired port
 
-
 // Middleware to parse JSON requests
 app.use(express.json(),cors());
 const uri = process.env.MONGODB_URL; // Replace with your MongoDB URI and database name
@@ -21,6 +20,15 @@ db.once('open',()=>console.log("Connected"))
 app.get('/', (req, res) => {
   res.send('Hello, this is your Express app!');
 });
+
+//User route
+const userRoute = require('./routes/userRoute')
+app.use('/user',userRoute,cors());
+
+//Past Trip route
+const tripRoute = require('./routes/tripRoute');
+app.use('/trip', tripRoute,cors());
+
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
